@@ -12,7 +12,11 @@
 <!--
 mixi.init({
     appId:    "mixiapp-web_38965",
-    relayUrl: "XXXXXXXXXXXXXXXXXXXXXXXX"
+    relayUrl: "[% base %]static/relay.html"
+});
+mixi.auth({
+    scope: "mixi_apps2",
+    state: "hoge"
 });
 //-->
 </script>
