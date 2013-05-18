@@ -1,0 +1,11 @@
+[% INCLUDE includes/header.tt %]
+
+<div class="container-narrow">
+
+<h1>Test</h1>
+
+
+</div>
+<!-- /div.container -->
+
+[% INCLUDE includes/footer.tt %]
