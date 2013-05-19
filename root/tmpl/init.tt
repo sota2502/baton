@@ -8,7 +8,7 @@ mixi.init({
 });
 mixi.auth({
     scope: "mixi_apps2 r_profile",
-    state: "hoge"
+    state: "[% session_id | html %]"
 });
 //-->
 </script>

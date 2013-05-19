@@ -35,10 +35,18 @@ sub index :Path :Args(0) {
     unless ( $params->{code} && $params->{state} ) {
         $c->go('init');
     }
+
+    unless ( $params->{state} eq $c->sessionid ) {
+        $c->go('default');
+    }
+
+    $c->session->{code} = $params->{code};
 }
 
 sub init :Private {
     my ( $self, $c ) = @_;
+    $c->session->{viewer_id} = $c->req->param('opensocial_viewer_id');
+    $c->stash->{session_id} = $c->sessionid;
 }
 
 =head2 default
