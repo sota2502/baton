@@ -1,0 +1,16 @@
+[% INCLUDE includes/header.tt %]
+
+<script type="text/javascript" language="Javascript">
+<!--
+mixi.init({
+    appId:    "mixiapp-web_38965",
+    relayUrl: "[% base %]static/relay.html"
+});
+mixi.auth({
+    scope: "mixi_apps2 r_profile",
+    state: "hoge"
+});
+//-->
+</script>
+
+[% INCLUDE includes/footer.tt %]

@@ -8,19 +8,6 @@
 <link rel="stylesheet" href="/static/css/baton.css" type="text/css" />
 <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
 <script type="text/javascript" charset="UTF-8" src="http://static.mixi.jp/js/application/connect.js"></script>
-<script type="text/javascript" language="Javascript">
-<!--
-mixi.init({
-    appId:    "mixiapp-web_38965",
-    relayUrl: "[% base %]static/relay.html"
-});
-mixi.auth({
-    scope: "mixi_apps2",
-    state: "hoge"
-});
-//-->
-</script>
-
 <style type="text/css">
 <!--
 body div.container {

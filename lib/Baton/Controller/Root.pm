@@ -31,6 +31,14 @@ sub index :Path :Args(0) {
 
     # Hello World
     # $c->response->body( $c->welcome_message );
+    my $params = $c->req->params;
+    unless ( $params->{code} && $params->{state} ) {
+        $c->go('init');
+    }
+}
+
+sub init :Private {
+    my ( $self, $c ) = @_;
 }
 
 =head2 default
