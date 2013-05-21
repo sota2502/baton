@@ -23,6 +23,8 @@ use Catalyst qw/
     Session
     Session::Store::FastMmap
     Session::State::Cookie
+    FormValidator::Simple
+    FormValidator::Simple::Auto
 /;
 
 extends 'Catalyst';

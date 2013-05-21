@@ -2,8 +2,19 @@
 
 <div class="container-narrow">
 
-<h1>Test</h1>
+<h1>バトンの作成</h1>
+<div>
+    <form class="form-inline" action="/add" method="post">
+        <fieldset>
+            <input type="text" name="title" placeholder="バトンのタイトルを入力してください" />
+            <button type="submit" class="btn btn-primary">作成</button>
+        </fieldset>
+    </form>
+</div>
 
+<hr />
+
+<h1>バトン一覧</h1>
 
 </div>
 <!-- /div.container -->

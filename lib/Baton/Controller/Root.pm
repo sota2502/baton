@@ -67,6 +67,21 @@ sub default :Path {
     $c->response->status(404);
 }
 
+=head2 add
+
+=cut
+
+sub add :Local {
+    my ( $self, $c ) = @_;
+
+    if ( $c->form->has_error ) {
+        $c->stash->{error} = $c->form;
+        $c->go('index');
+    }
+
+    $c->go('index');
+}
+
 =head2 end
 
 Attempt to render a view, if needed.

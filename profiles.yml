@@ -1,0 +1,4 @@
+add:
+    title:
+        - rule: NOT_BLANK
+          message: タイトルを入力してください
