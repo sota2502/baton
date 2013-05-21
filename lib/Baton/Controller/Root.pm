@@ -2,6 +2,9 @@ package Baton::Controller::Root;
 use Moose;
 use namespace::autoclean;
 
+use Crypt::OpenSSL::CA;
+use OAuth::Lite::ServerUtil;
+
 BEGIN { extends 'Catalyst::Controller' }
 
 #
@@ -33,6 +36,9 @@ sub index :Path :Args(0) {
     # $c->response->body( $c->welcome_message );
     my $params = $c->req->params;
     unless ( $params->{code} && $params->{state} ) {
+        unless ( $self->is_valid_request($c) ) {
+            $c->go('default');
+        }
         $c->go('init');
     }
 
@@ -68,6 +74,31 @@ Attempt to render a view, if needed.
 =cut
 
 sub end : ActionClass('RenderView') {}
+
+=head2 is_valid_request
+
+=cut
+
+sub is_valid_request {
+    my ($self, $c) = @_;
+
+    my $ca  = $c->config->{graph_api}->{cert};
+    my $url = $c->config->{graph_api}->{url};
+
+    my $public_key =
+      Crypt::OpenSSL::CA::X509->parse($ca)->get_public_key()->to_PEM();
+    my $util = OAuth::Lite::ServerUtil->new();
+    $util->support_signature_method('RSA_SHA1');
+
+    my $ret = $util->verify_signature(
+        method          => $c->req->method,
+        url             => $url,
+        params          => $c->req->params,
+        consumer_secret => $public_key,
+    );
+
+    return $ret ? 1 : 0;
+}
 
 =head1 AUTHOR
 
