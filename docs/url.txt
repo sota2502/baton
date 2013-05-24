@@ -1,0 +1,11 @@
+/baton                      バトン一覧
+/baton/add                  バトン作成
+/baton/XXX/edit             バトン編集
+/baton/XXX/delete           バトン削除
+/baton/XXX/diary            日記一覧
+/baton/XXX/diary/add        日記作成
+/baton/XXX/diary/YYY        日記詳細
+/baton/XXX/diary/YYY/delete 日記削除
+/baton/XXX/diary/YYY/like   日記いいね
+
+
