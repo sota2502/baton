@@ -3,6 +3,7 @@ use Moose;
 use namespace::autoclean;
 
 use Catalyst::Runtime 5.80;
+use Digest::SHA1;
 
 # Set flags and add plugins for the application.
 #
@@ -50,6 +51,12 @@ __PACKAGE__->config(
 # Start the application
 __PACKAGE__->setup();
 
+sub create_token {
+    my ($self, $salt_name, $value) = @_;
+
+    my $salt = $self->config->{salt}->{$salt_name} || '';
+    return Digest::SHA1::sha1_hex($value . $salt);
+}
 
 =head1 NAME
 

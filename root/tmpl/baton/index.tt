@@ -1,0 +1,23 @@
+[% INCLUDE includes/header.tt %]
+
+<div class="container-narrow">
+
+<h1>バトンの作成</h1>
+<div>
+    <form class="form-inline" action="/baton/add" method="post">
+        <input type="hidden" name="post_token" value="[% post_token | html %]" />
+        <fieldset>
+            <input type="text" name="title" placeholder="バトンのタイトルを入力してください" />
+            <button type="submit" class="btn btn-primary">作成</button>
+        </fieldset>
+    </form>
+</div>
+
+<hr />
+
+<h1>バトン一覧</h1>
+
+</div>
+<!-- /div.container -->
+
+[% INCLUDE includes/footer.tt %]

@@ -47,12 +47,16 @@ sub index :Path :Args(0) {
     }
 
     $c->session->{code} = $params->{code};
+    # $c->go('baton/index');
+    $c->res->redirect($c->uri_for('/baton'));
 }
 
 sub init :Private {
     my ( $self, $c ) = @_;
-    $c->session->{viewer_id} = $c->req->param('opensocial_viewer_id');
-    $c->stash->{session_id} = $c->sessionid;
+    my $viewer_id = $c->req->param('opensocial_viewer_id');
+    $c->session->{viewer_id}    = $viewer_id;
+    $c->session->{viewer_token} = $c->create_token('cookie', $viewer_id);
+    $c->stash->{session_id}     = $c->sessionid;
 }
 
 =head2 default
@@ -80,6 +84,19 @@ sub add :Local {
     }
 
     $c->go('index');
+}
+
+=head2 begin
+
+=cut
+
+sub begin : Private {
+    my ($self, $c) = @_;
+
+    my $viewer_id = $c->session->{viewer_id};
+    return unless ($viewer_id);
+
+    $c->stash->{post_token} = $c->create_token('post', $viewer_id);
 }
 
 =head2 end
