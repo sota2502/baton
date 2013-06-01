@@ -20,10 +20,19 @@ Catalyst Controller.
 =head2 index
 
 =cut
-
+=cut
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
+}
+=cut
+
+sub base :ChainedParent :PathPart('baton') :CaptureArgs(0) {}
+
+sub list :Chained('base') :PathPart('') :Args(0) {
+    my ( $self, $c ) = @_;
+
+    # $c->res->body('list' . $c->device );
 }
 
 =head2 add

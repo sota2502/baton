@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Language" content="ja" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
+<link rel="stylesheet" href="/static/css/baton.css" type="text/css" />
+<link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+<script type="text/javascript" charset="UTF-8" src="http://static.mixi.jp/js/application/connect.js"></script>
+<style type="text/css">
+<!--
+body div.container {
+    padding: 0 60px;
+}
+table tr.calSunday {
+    color: red;
+}
+-->
+</style>
+</head>
+
+<body>

@@ -28,12 +28,25 @@ Baton::Controller::Root - Root Controller for Baton
 The root page (/)
 
 =cut
-
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    # Hello World
-    # $c->response->body( $c->welcome_message );
+    my $url = $c->uri_for(sprintf "/%s/baton", $c->device);
+    $c->res->redirect($url);
+}
+
+sub base :Chained('/') :PathPart('') :CaptureArgs(1) {
+    my ( $self, $c, $device ) = @_;
+    unless ( $device =~ /\A(:?pc|sp)\z/ ) {
+        $c->go('default');
+    }
+
+    $c->stash->{device} = $device;
+}
+
+sub top :Chained('base') :PathPart('') :Args(0) {
+    my ( $self, $c ) = @_;
+
     my $params = $c->req->params;
     unless ( $params->{code} && $params->{state} ) {
         unless ( $self->is_valid_request($c) ) {
@@ -51,11 +64,19 @@ sub index :Path :Args(0) {
     $c->res->redirect($c->uri_for('/baton'));
 }
 
+sub callback :Local :Args(0) {
+    my ( $self, $c ) = @_;
+
+    my $url = $c->uri_for(sprintf "/%s/baton", $c->device);
+    $c->res->redirect($url);
+}
+
 sub init :Private {
     my ( $self, $c ) = @_;
     my $viewer_id = $c->req->param('opensocial_viewer_id');
     $c->session->{viewer_id}    = $viewer_id;
     $c->session->{viewer_token} = $c->create_token('cookie', $viewer_id);
+    $c->session->{device}       = $c->device;
     $c->stash->{session_id}     = $c->sessionid;
 }
 
@@ -69,21 +90,6 @@ sub default :Path {
     my ( $self, $c ) = @_;
     $c->response->body( 'Page not found' );
     $c->response->status(404);
-}
-
-=head2 add
-
-=cut
-
-sub add :Local {
-    my ( $self, $c ) = @_;
-
-    if ( $c->form->has_error ) {
-        $c->stash->{error} = $c->form;
-        $c->go('index');
-    }
-
-    $c->go('index');
 }
 
 =head2 begin
@@ -105,7 +111,11 @@ Attempt to render a view, if needed.
 
 =cut
 
-sub end : ActionClass('RenderView') {}
+sub end : ActionClass('RenderView') {
+    my ($self, $c) = @_;
+    my $path = $c->config->{root} . '/tmpl/' . $c->device;
+    $c->stash->{additional_template_paths} = [$path];
+}
 
 =head2 is_valid_request
 
@@ -115,7 +125,7 @@ sub is_valid_request {
     my ($self, $c) = @_;
 
     my $ca  = $c->config->{graph_api}->{cert};
-    my $url = $c->config->{graph_api}->{url};
+    my $url = $c->config->{graph_api}->{url}->{$c->device};
 
     my $public_key =
       Crypt::OpenSSL::CA::X509->parse($ca)->get_public_key()->to_PEM();

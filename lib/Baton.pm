@@ -58,6 +58,12 @@ sub create_token {
     return Digest::SHA1::sha1_hex($value . $salt);
 }
 
+sub device {
+    my ($self) = @_;
+
+    return $self->stash->{device} || $self->session->{device};
+}
+
 =head1 NAME
 
 Baton - Catalyst based application
